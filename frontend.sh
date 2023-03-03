@@ -1,13 +1,5 @@
 source common.sh
 
-#code_dir=$(pwd)
-#log_file=/tmp/roboshop.log
-#rm -f ${log_file}
-#
-#print_head(){
-# echo -e "\e[36m$1\e[0m"
-#}
-
 print_head "Installing nginx"
 yum install nginx -y &>>${log_file}
 
@@ -26,9 +18,8 @@ cp ${code_dir}/configs/nginx-roboshop.conf /etc/nginx/default.d/roboshop.conf &>
 
 print_head "Enabling nginx"
 systemctl enable nginx &>>${log_file}
+
 print_head "Starting nginx"
 systemctl start nginx &>>${log_file}
 
 
-#if any command is errored or failed , we need to stop the script
-#Status of a command need to be printed

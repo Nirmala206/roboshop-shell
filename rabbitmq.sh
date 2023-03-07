@@ -31,8 +31,11 @@ print_head "Start RabbitMQ Service"
 systemctl start rabbitmq-server &>>${log_file}
 status_check $?
 
-print_head "Copy SystemD Service File"
+print_head "Add Application user"
+rabbitmqctl list_users | grep roboshop  &>>${log_file}
+if [ $? -ne 0 ]; then
 rabbitmqctl add_user roboshop ${mysql_root_password} &>>${log_file}
+fi
 status_check $?
 
 #print_head "Copy SystemD Service File"

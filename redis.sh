@@ -1,4 +1,4 @@
-source connon.sh
+source common.sh
 
 print_head "Installing Redis Repo files"
 yum install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y &>>${log_file}

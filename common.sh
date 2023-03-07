@@ -141,7 +141,6 @@ python() {
   app_prereq_setup
 
   print_head "Download Dependencies"
-  cd /app
   pip3.6 install -r requirements.txt &>>${log_file}
   status_check $?
 

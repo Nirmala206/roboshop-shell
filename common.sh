@@ -110,7 +110,7 @@ nodejs() {
 
 java() {
 
-  print_head "Delete Old Content"
+  print_head "Install Maven"
   yum install maven -y &>>${log_file}
   status_check $?
 

@@ -50,25 +50,27 @@ schema_setup() {
     status_check $?
   elif [ "${schema_type}" == "mysql" ]; then
     print_head "Install MySQL Client"
-    yum install mysql -y &>>${log_file
+    yum install mysql -y &>>${log_file}
     status_check $?
 
     print_head "Load Schema"
-    mysql -h mysql.devops2023.tech -uroot -p${mysql_root_password} < /app/schema/shipping.sql
-
-    fi
+    mysql -h mysql.devops2023.tech -uroot -p${mysql_root_password} < /app/schema/shipping.sql &>>${log_file}
+    status_check $?
+  fi
 }
 
 app_prereq_setup() {
-  print_head "Create Roboshop User"
-    id roboshop &>>${log_file}
-    if [ $? -ne 0 ]; then
-     useradd roboshop &>>${log_file}
-    fi
-    status_check $?
 
-    print_head "Create Application Directory"
-    if [ ! -d /app  ]; then
+  print_head "Create Roboshop User"
+  id roboshop &>>${log_file}
+
+  if [ $? -ne 0 ]; then
+    useradd roboshop &>>${log_file}
+  fi
+  status_check $?
+
+  print_head "Create Application Directory"
+   if [ ! -d /app  ]; then
      mkdir /app &>>${log_file}
     fi
     status_check $?
@@ -102,8 +104,8 @@ nodejs() {
   npm install &>>${log_file}
   status_check $?
 
-
   schema_setup
+
   systemd_setup
 
 }
@@ -117,8 +119,9 @@ java() {
   app_prereq_setup
 
   print_head "Download Dependencies & Packages"
-  mvn clean package &>>${log_file} &>>${log_file}
+  mvn clean package &>>${log_file}
   mv target/${component}-1.0.jar ${component}.jar &>>${log_file}
+  status_check $?
 
   #Schema Setup Function
   schema_setup

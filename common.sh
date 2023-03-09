@@ -27,11 +27,11 @@ systemd_setup() {
   systemctl daemon-reload &>>${log_file}
   status_check $?
 
-  print_head "Enable User Service"
+  print_head "Enable ${component} Service"
   systemctl enable ${component} &>>${log_file}
   status_check $?
 
-  print_head "Start  Catalogue Service"
+  print_head "Start  ${component} Service"
   systemctl start ${component} &>>${log_file}
   status_check $?
 }
